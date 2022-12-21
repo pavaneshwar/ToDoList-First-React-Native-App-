@@ -1,38 +1,34 @@
-import { StyleSheet, Text, View , Button, TextInput, ScrollView, FlatList} from 'react-native';
+import { StyleSheet, View , FlatList, Alert} from 'react-native';
 import { useState } from 'react';
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 
 export default function App() {
 
-  const [enteredText, setEnteredText] = useState('');
+  
   const [receivedText, setRecievedText] = useState([]);
 
-
-  function goalInput(e){
-      setEnteredText(e);
+  function addGoal(enteredText){
+    setRecievedText(e=>[...e,{text:enteredText,id:Math.random().toString()}]);
   }
 
-  function addgoal(e){
-    setRecievedText(e=>[...e,{text:enteredText,id:Math.random().toString()}]);
+  function deleteGoal(id){
+    setRecievedText(e=>{
+      return (e.filter((goal)=>goal.id!==id))
+    });
+    Alert.alert("selected is deleted")
   }
 
   return (
    <View style={styles.overall}>
-      <View style={styles.title}>
-        <Text style={{color:'red',fontWeight:'bold'}}>Today's Goal</Text>
-      </View>
-      <View style={styles.body}>
-        <TextInput style={styles.textInput} placeholder='Fill me' placeholderTextColor={'white'} onChangeText={goalInput}/>
-        <Button title='amuthu' onPress={addgoal}/>
-      </View>
+      <GoalInput onAddGoal={addGoal}/>
       <View style={styles.goalSet}>
         {/* <ScrollView>
         {receivedText.map((a)=><Text style={styles.goal} key={a}>{a}</Text>)}
         </ScrollView> */}
         <FlatList data={receivedText} renderItem={(i)=>{
           return(
-            <View>
-              <Text style={styles.goal}>{i.item.text}</Text>
-            </View>
+            <GoalItem text={i.item.text} id={i.item.id} deleteKaro={deleteGoal} />
           )
         }}
         keyExtractor={(item,index)=>{
@@ -49,56 +45,14 @@ const styles = StyleSheet.create({
   overall:{
     padding:10,
     paddingTop:30,
-    flex:1,
-    backgroundColor:'black',
-  },
-  title:{
-    borderWidth:1,
-    borderColor:'rgb(5, 225, 250)',
-    flex:0.5,
-    justifyContent:'center',
-    textAlign:'centre',
-    alignItems:'center',
-    color:'white'
-  },
-  body:{
-    flexDirection:'row',
-    justifyContent:'center',
-    marginBottom:15,
-    alignItems:'center',
     flex:2,
-    borderBottomWidth:3,
-    borderBottomColor:'rgb(4, 117, 117)',
+    backgroundColor:'white',
   },
-  textInput:{
-    color:'white',
-    borderWidth:4,
-    borderColor:'rgb(73, 97, 95)',
-    paddingLeft:10,
-    width:'70%',
-    height:45,
-    marginRight:7,
-    backgroundColor:'rgba(110, 186, 158)',
-    fontWeight:'bold',
-    fontSize:20,
-  },
+  
   goalSet:{
-    flex:8,
+    flex:3.5,
     backgroundColor:'rgb(66, 201, 190)',
     padding:7,
     borderRadius:15
   },
-
-  goal:{
-    color:'Black',
-    fontFamily:'sans-serif',
-    fontSize:20,
-    fontWeight:'bold',
-    border:2,
-    margin:5,
-    backgroundColor:'rgba(207, 229, 232,0.3)',
-    borderRadius:10,
-    padding:6,
-    paddingLeft:10
-  }
 });
