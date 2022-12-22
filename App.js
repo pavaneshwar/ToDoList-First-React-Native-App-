@@ -1,15 +1,24 @@
-import { StyleSheet, View , FlatList, Alert} from 'react-native';
+import { StyleSheet, View ,Button, FlatList, Alert} from 'react-native';
 import { useState } from 'react';
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
 
 export default function App() {
 
-  
+  const [modelIsVisible,setModelIsVisible] = useState(false);
   const [receivedText, setRecievedText] = useState([]);
 
   function addGoal(enteredText){
     setRecievedText(e=>[...e,{text:enteredText,id:Math.random().toString()}]);
+    goBack();
+  }
+
+  function goalSetting(){
+    setModelIsVisible(true);
+  }
+
+  function goBack(){
+    setModelIsVisible(false);
   }
 
   function deleteGoal(id){
@@ -21,7 +30,8 @@ export default function App() {
 
   return (
    <View style={styles.overall}>
-      <GoalInput onAddGoal={addGoal}/>
+      <Button title='Add new goal' onPress={goalSetting}/>
+      <GoalInput theriyudha={modelIsVisible} onAddGoal={addGoal} veliyapo={goBack}/>
       <View style={styles.goalSet}>
         {/* <ScrollView>
         {receivedText.map((a)=><Text style={styles.goal} key={a}>{a}</Text>)}

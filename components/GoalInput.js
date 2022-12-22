@@ -1,4 +1,4 @@
-import { StyleSheet, View,Text,Button,TextInput} from "react-native";
+import { StyleSheet, View,Text,Button,TextInput,Modal} from "react-native";
 import { useState } from "react";
 
 function GoalInput(prop){
@@ -15,15 +15,18 @@ function GoalInput(prop){
     }
 
     return(
-        <View style={styles.topContainer} >
-            <View style={styles.title}>
-                <Text style={{color:'red',fontWeight:'bold',fontSize:20}}>Today's Goal</Text>
+        <Modal visible={prop.theriyudha} animationType="slide">
+            <View style={styles.topContainer} >
+                <View style={styles.title}>
+                    <Text style={{color:'red',fontWeight:'bold',fontSize:20}}>Today's Goal</Text>
+                </View>
+                <View style={styles.body}>
+                    <TextInput style={styles.textInput} placeholder='Fill me' placeholderTextColor={'rbg(4, 45, 48)'} onChangeText={goalInput} value={enteredText}/>
+                    <Button title='amuthu' onPress={addGoal} color='black' />
+                    <Button title='veliya po' onPress={prop.veliyapo}/>
+                </View>
             </View>
-            <View style={styles.body}>
-                <TextInput style={styles.textInput} placeholder='Fill me' placeholderTextColor={'rbg(4, 45, 48)'} onChangeText={goalInput} value={enteredText}/>
-                <Button title='amuthu' onPress={addGoal} color='black' />
-            </View>
-      </View>
+        </Modal>
     )
 }
 
@@ -32,7 +35,6 @@ export default GoalInput;
 const styles=StyleSheet.create({
     topContainer:{
         flex:1,
-        flexDirection:'column',
     },    
     title:{
         borderWidth:15,
@@ -42,10 +44,9 @@ const styles=StyleSheet.create({
         justifyContent:'center',
         textAlign:'centre',
         alignItems:'center',
-        color:'rgb(66, 230, 245)'
+        color:'rgb(66, 230, 245)',
     },
     body:{
-        flexDirection:'row',
         justifyContent:'center',
         alignItems:'center',
         paddingBottom:15,
