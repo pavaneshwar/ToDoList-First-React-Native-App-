@@ -1,4 +1,5 @@
 import { StyleSheet, View ,Button, FlatList, Alert} from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import GoalItem from './components/GoalItem';
 import GoalInput from './components/GoalInput';
@@ -29,6 +30,8 @@ export default function App() {
   }
 
   return (
+   <>
+   <StatusBar style='auto' />
    <View style={styles.overall}>
       <Button title='Add new goal' onPress={goalSetting}/>
       <GoalInput theriyudha={modelIsVisible} onAddGoal={addGoal} veliyapo={goBack}/>
@@ -48,6 +51,7 @@ export default function App() {
         />
       </View>
    </View>
+   </>
   );
 }
 
